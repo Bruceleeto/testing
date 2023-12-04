@@ -793,7 +793,7 @@ static inline __attribute__((always_inline)) float pl_fipr(float x1, float x2, f
   register float __y4 __asm__("fr11") = ty4;
 
   // take care of all the floats in one fell swoop
-   __asm__ volatile ("fipr FV4, FV8\n"
+  __asm__ __volatile__ ("fipr FV4, FV8\n"
   : "+f" (__y4) // output (gets written to FR11)
   : "f" (__x1), "f" (__x2), "f" (__x3), "f" (__x4), "f" (__y1), "f" (__y2), "f" (__y3) // inputs
   : // clobbers
@@ -802,6 +802,60 @@ static inline __attribute__((always_inline)) float pl_fipr(float x1, float x2, f
   return __y4;
 }
 
+// Default (8-bit, 1 byte at a time) DH`moop
+void * memmove_co (void *dest, const void *src, size_t len)
+{
+  if(!len)
+  {
+    return dest;
+  }
+
+  const uint8_t *s = (uint8_t *)src;
+  uint8_t *d = (uint8_t *)dest;
+
+  if (s > d)
+  {
+    uint32_t diff = (uint32_t)d - (uint32_t)(s + 1); // extra offset because input gets incremented before output is calculated
+    // This will underflow and be like adding a negative offset
+
+    // Can use 'd' as a scratch reg now
+    __asm__ __volatile__ (
+      "clrs\n" // Align for parallelism (CO) - SH4a use "stc SR, Rn" instead with a dummy Rn
+    ".align 2\n"
+    "0:\n\t"
+      "dt %[size]\n\t" // (--len) ? 0 -> T : 1 -> T (EX 1)
+      "mov.b @%[in]+, %[scratch]\n\t" // scratch = *(s++) (LS 1/2)
+      "bf.s 0b\n\t" // while(s != nexts) aka while(!T) (BR 1/2)
+      " mov.b %[scratch], @(%[offset], %[in])\n" // *(datatype_of_s*) ((char*)s + diff) = scratch, where src + diff = dest (LS)
+      : [in] "+&r" ((uint32_t)s), [scratch] "=&r" ((uint32_t)d), [size] "+&r" (len) // outputs
+      : [offset] "z" (diff) // inputs
+      : "t", "memory" // clobbers
+    );
+  }
+  else // s < d
+  {
+    uint8_t *nextd = d + len;
+
+    uint32_t diff = (uint32_t)s - (uint32_t)(d + 1); // extra offset because input calculation occurs before output is decremented
+    // This will underflow and be like adding a negative offset
+
+    // Can use 's' as a scratch reg now
+    __asm__ __volatile__ (
+      "clrs\n" // Align for parallelism (CO) - SH4a use "stc SR, Rn" instead with a dummy Rn
+    ".align 2\n"
+    "0:\n\t"
+      "dt %[size]\n\t" // (--len) ? 0 -> T : 1 -> T (EX 1)
+      "mov.b @(%[offset], %[out_end]), %[scratch]\n\t" // scratch = *(--nexts) where --nexts is nextd + underflow result (LS 2)
+      "bf.s 0b\n\t" // while(nextd != d) aka while(!T) (BR 1/2)
+      " mov.b %[scratch], @-%[out_end]\n" // *(--nextd) = scratch (LS 1/1)
+      : [out_end] "+&r" ((uint32_t)nextd), [scratch] "=&r" ((uint32_t)s), [size] "+&r" (len) // outputs
+      : [offset] "z" (diff) // inputs
+      : "t", "memory" // clobbers
+    );
+  }
+
+  return dest;
+}
 
 #ifndef TRUE
 #define TRUE 1
@@ -1319,6 +1373,29 @@ int plm_seek(plm_t *self, double time, int seek_exact) {
 }
 
 
+void *memsetsh4(void *dest, const uint8_t val, size_t len) {
+    uint8_t *ptr, *sq;
+    uint32_t nb;
+
+    ptr = (uint8_t *)dest;
+
+    ptr = (uint8_t *)(((uint32_t)ptr + 31) & ~(31)); /* Align dest to 32 bytes */
+
+    /* Fill in store queue */
+    sq = (uint8_t *)0xE0000000;
+    for (nb = 64; nb > 0; nb--) *sq++ = val;
+
+    /* Set dest image to store queue */
+    ptr = (uint8_t *)((((uint32_t)ptr) & 0x03FFFFFF) | 0xE0000000);
+
+    while (len >= 32) {
+        __builtin_prefetch(ptr);
+        len -= 32;
+        ptr += 32;
+    }
+
+    return dest;
+}
 
 // -----------------------------------------------------------------------------
 // plm_buffer implementation
@@ -1397,7 +1474,7 @@ plm_buffer_t *plm_buffer_create_with_file(unsigned int fh, int close_when_done) 
 
 plm_buffer_t *plm_buffer_create_with_memory(uint8_t *bytes, size_t length, int free_when_done) {
 	plm_buffer_t *self = (plm_buffer_t *)PLM_MALLOC(sizeof(plm_buffer_t));
-	memset(self, 0, sizeof(plm_buffer_t));
+	memsetsh4(self, 0, sizeof(plm_buffer_t));
 	self->capacity = length;
 	self->length = length;
 	self->total_size = length;
@@ -1527,7 +1604,7 @@ void plm_buffer_discard_read_bytes(plm_buffer_t *self) {
 		self->length = 0;
 	}
 	else if (byte_pos > 0) {
-		memmove(self->bytes, self->bytes + byte_pos, self->length - byte_pos);
+		memmove_co(self->bytes, self->bytes + byte_pos, self->length - byte_pos);
 		self->bit_index -= byte_pos << 3;
 		self->length -= byte_pos;
 	}
@@ -2950,7 +3027,7 @@ void plm_video_decode_picture(plm_video_t *self) {
 		int scan_half = scan >> 1;
 		int i;
 
-	 __asm__ ("pref @%0" : : "r"(s));
+		__asm__("pref @%0" : : "r"(s));
 
 		for (i = (self->mb_row + 1); i; i--)
 		{
@@ -2960,7 +3037,7 @@ void plm_video_decode_picture(plm_video_t *self) {
 			{
 				int y;
 
-			 __asm__ ("pref @%0" : : "r"(s + 16));
+				__asm__("pref @%0" : : "r"(s + 16));
 
 				for (y = 0; y < 8; y++)
 				{
@@ -2977,7 +3054,7 @@ void plm_video_decode_picture(plm_video_t *self) {
 				d_cr -= scan_half * 8 - 2;
 				s += 16;
 
-				 __asm__ ("pref @%0" : : "r"(s + 16));
+				__asm__("pref @%0" : : "r"(s + 16));
 
 				for (y = 0; y < 8; y++)
 				{
@@ -2991,7 +3068,7 @@ void plm_video_decode_picture(plm_video_t *self) {
 	
 				s += 16;
 
-				 __asm__ ("pref @%0" : : "r"(s + 16));
+				__asm__("pref @%0" : : "r"(s + 16));
 
 				for (y = 0; y < 8; y++)
 				{
@@ -3006,7 +3083,7 @@ void plm_video_decode_picture(plm_video_t *self) {
 				d_y -= scan * 16 - 4;
 				s += 16;
 
-				 __asm__ ("pref @%0" : : "r"(s + 16));
+				__asm__("pref @%0" : : "r"(s + 16));
 			}
 			
 			d_cb += scan_half * 7;
@@ -3157,7 +3234,7 @@ void plm_video_decode_macroblock(plm_video_t *self) {
 	int cbp = ((self->macroblock_type & 0x02) != 0)
 		? plm_buffer_read_vlc(self->buffer, PLM_VIDEO_CODE_BLOCK_PATTERN)
 		: (self->macroblock_intra ? 0x3f : 0);
-
+     
 	for (int block = 0, mask = 0x20; block < 6; block++) {
 		if ((cbp & mask) != 0) {
 			plm_video_decode_block(self, block);
@@ -3221,8 +3298,8 @@ void plm_video_predict_macroblock(plm_video_t *self) {
 		fw_h <<= 1;
 		fw_v <<= 1;
 	}
-	fw_h += (self->mb_col << 5);
-	fw_v += (self->mb_row << 5);
+	fw_h += fw_h < 0 ? ((self->mb_col - self->mb_width) << 5) : (self->mb_col << 5);
+	fw_v += fw_v < 0 ? ((self->mb_row - self->mb_height) << 5) : (self->mb_row << 5);
 
 	if (self->picture_type == PLM_VIDEO_PICTURE_TYPE_B) {
 		int bw_h = self->motion_backward.h;
@@ -3232,8 +3309,8 @@ void plm_video_predict_macroblock(plm_video_t *self) {
 			bw_h <<= 1;
 			bw_v <<= 1;
 		}
-		bw_h += (self->mb_col << 5);
-		bw_v += (self->mb_row << 5);
+		bw_h += bw_h < 0 ? ((self->mb_col - self->mb_width) << 5) : (self->mb_col << 5);
+		bw_v += bw_v < 0 ? ((self->mb_row - self->mb_height) << 5) : (self->mb_row << 5);
 
 		if (self->motion_forward.is_set) {
 			plm_video_copy_macroblock(d, &self->frame_forward, fw_h, fw_v);
@@ -3254,14 +3331,17 @@ void plm_video_copy_macroblock(
 	uint32_t *dest, plm_frame_t *reference, int motion_h, int motion_v
 ) {
 	int dw = reference->width;
+	int dh = reference->height;
+	int hp = motion_h < 0 ? (dw + (motion_h >> 1)) : (motion_h >> 1);
+	int vp = motion_v < 0 ? (dh + (motion_v >> 1)) : (motion_v >> 1);
 	int odd_h = (motion_h & 1) == 1;
 	int odd_v = (motion_v & 1) == 1;
 	uint8_t *src = reference->y.data;
-	unsigned int si = (motion_v >> 1) * dw + (motion_h >> 1);
+	unsigned int si = vp * dw + hp;
 
 	/* Y block */
 	dest += 32;
-	 __asm__ ("pref @%0" : : "r"(dest));
+	__asm__("pref @%0" : : "r"(dest));
 	
 	if (odd_h && odd_v)
 	{
@@ -3273,8 +3353,8 @@ void plm_video_copy_macroblock(
 		{
 			for (int j = 8; j; j--)
 			{
-			 __asm__ ("pref @%0" : : "r"(s1 + scan));
-				 __asm__ ("pref @%0" : : "r"(s2 + scan));
+				__asm__("pref @%0" : : "r"(s1 + scan));
+				__asm__("pref @%0" : : "r"(s2 + scan));
 				d[0] = (s1[0] + s1[1] + s2[0] + s2[1] + 2) >> 2;
 				d[1] = (s1[1] + s1[2] + s2[1] + s2[2] + 2) >> 2;
 				d[2] = (s1[2] + s1[3] + s2[2] + s2[3] + 2) >> 2;
@@ -3298,18 +3378,18 @@ void plm_video_copy_macroblock(
 			d += 64;
 		}
 	}
-	else if (odd_h || odd_v)
+	else if (odd_v)
 	{
 		uint8_t *d = (uint8_t *)dest;
 		uint8_t *s1 = (uint8_t *)(src + si);
-		uint8_t *s2 = (uint8_t *)(odd_h ? (src + si + 1) : (src + si + dw));
+		uint8_t *s2 = (uint8_t *)(src + si + dw);
 		int scan = dw;
 		for (int i = 2; i; i--)
 		{
 			for (int j = 8; j; j--)
 			{
-			 __asm__ ("pref @%0" : : "r"(s1 + scan));
-				 __asm__ ("pref @%0" : : "r"(s2 + scan));
+				__asm__("pref @%0" : : "r"(s1 + scan));
+				__asm__("pref @%0" : : "r"(s2 + scan));
 				d[0] = (s1[0] + s2[0] + 1) >> 1;
 				d[1] = (s1[1] + s2[1] + 1) >> 1;
 				d[2] = (s1[2] + s2[2] + 1) >> 1;
@@ -3333,9 +3413,41 @@ void plm_video_copy_macroblock(
 			d += 64;
 		}
 	}
+	else if (odd_h)
+	{
+		uint8_t *d = (uint8_t *)dest;
+		uint8_t *s = (uint8_t *)(src + si);
+		int scan = dw;
+		for (int i = 2; i; i--)
+		{
+			for (int j = 8; j; j--)
+			{
+				__asm__("pref @%0" : : "r"(s + scan));
+				d[0] = (s[0] + s[1] + 1) >> 1;
+				d[1] = (s[1] + s[2] + 1) >> 1;
+				d[2] = (s[2] + s[3] + 1) >> 1;
+				d[3] = (s[3] + s[4] + 1) >> 1;
+				d[4] = (s[4] + s[5] + 1) >> 1;
+				d[5] = (s[5] + s[6] + 1) >> 1;
+				d[6] = (s[6] + s[7] + 1) >> 1;
+				d[7] = (s[7] + s[8] + 1) >> 1;
+				d[64] = (s[8] + s[9] + 1) >> 1;
+				d[65] = (s[9] + s[10] + 1) >> 1;
+				d[66] = (s[10] + s[11] + 1) >> 1;
+				d[67] = (s[11] + s[12] + 1) >> 1;
+				d[68] = (s[12] + s[13] + 1) >> 1;
+				d[69] = (s[13] + s[14] + 1) >> 1;
+				d[70] = (s[14] + s[15] + 1) >> 1;
+				d[71] = (s[15] + s[16] + 1) >> 1;
+				d += 8;
+				s += scan;
+			}
+			d += 64;
+		}
+	}
 	else
 	{
-		if (motion_h & 2)
+		if (hp & 1)
 		{
 			uint8_t *d = (uint8_t *)dest;
 			uint8_t *s = (uint8_t *)(src + si);
@@ -3344,7 +3456,7 @@ void plm_video_copy_macroblock(
 			{
 				for (int j = 8; j; j--)
 				{
-				 __asm__ ("pref @%0" : : "r"(s + scan));
+					__asm__("pref @%0" : : "r"(s + scan));
 					d[0] = s[0];
 					d[1] = s[1];
 					d[2] = s[2];
@@ -3367,7 +3479,7 @@ void plm_video_copy_macroblock(
 				d += 64;
 			}
 		}
-		else if (motion_h & 4)
+		else if (hp & 2)
 		{
 			uint16_t *d = (uint16_t *)dest;
 			uint16_t *s = (uint16_t *)(src + si);
@@ -3376,7 +3488,7 @@ void plm_video_copy_macroblock(
 			{
 				for (int j = 8; j; j--)
 				{
-					 __asm__("pref @%0" : : "r"(s + scan));
+					__asm__("pref @%0" : : "r"(s + scan));
 					d[0] = s[0];
 					d[1] = s[1];
 					d[2] = s[2];
@@ -3400,7 +3512,7 @@ void plm_video_copy_macroblock(
 			{
 				for (int j = 8; j; j--)
 				{
-					 __asm__ ("pref @%0" : : "r"(s + scan));
+					__asm__("pref @%0" : : "r"(s + scan));
 					d[0] = s[0];
 					d[1] = s[1];
 					d[16] = s[2];
@@ -3415,14 +3527,17 @@ void plm_video_copy_macroblock(
 
 	/* Cb, Cr blocks */
 	dest -= 32;
-	 __asm__ ("pref @%0" : : "r"(dest));
+	__asm__("pref @%0" : : "r"(dest));
 	src = reference->cb.data;
 	dw >>= 1;
+	dh >>= 1;
 	motion_h /= 2;
 	motion_v /= 2;
+	hp = motion_h < 0 ? (dw + (motion_h >> 1)) : (motion_h >> 1);
+	vp = motion_v < 0 ? (dh + (motion_v >> 1)) : (motion_v >> 1);
 	odd_h = (motion_h & 1) == 1;
 	odd_v = (motion_v & 1) == 1;
-	si = (motion_v >> 1) * dw + (motion_h >> 1);
+	si = vp * dw + hp;
 
 	for (int i = 2; i; i--)
 	{
@@ -3434,8 +3549,8 @@ void plm_video_copy_macroblock(
 			int scan = dw;
 			for (int j = 8; j; j--)
 			{
-				 __asm__ ("pref @%0" : : "r"(s1 + scan));
-				 __asm__ ("pref @%0" : : "r"(s2 + scan));
+				__asm__("pref @%0" : : "r"(s1 + scan));
+				__asm__("pref @%0" : : "r"(s2 + scan));
 				d[0] = (s1[0] + s1[1] + s2[0] + s2[1] + 2) >> 2;
 				d[1] = (s1[1] + s1[2] + s2[1] + s2[2] + 2) >> 2;
 				d[2] = (s1[2] + s1[3] + s2[2] + s2[3] + 2) >> 2;
@@ -3449,16 +3564,16 @@ void plm_video_copy_macroblock(
 				s2 += scan;
 			}
 		}
-		else if (odd_h || odd_v)
+		else if (odd_v)
 		{
 			uint8_t *d = (uint8_t *)dest;
 			uint8_t *s1 = (uint8_t *)(src + si);
-			uint8_t *s2 = (uint8_t *)(odd_h ? (src + si + 1) : (src + si + dw));
+			uint8_t *s2 = (uint8_t *)(src + si + dw);
 			int scan = dw;
 			for (int j = 8; j; j--)
 			{
-				 __asm__ ("pref @%0" : : "r"(s1 + scan));
-				 __asm__ ("pref @%0" : : "r"(s2 + scan));
+				__asm__("pref @%0" : : "r"(s1 + scan));
+				__asm__("pref @%0" : : "r"(s2 + scan));
 				d[0] = (s1[0] + s2[0] + 1) >> 1;
 				d[1] = (s1[1] + s2[1] + 1) >> 1;
 				d[2] = (s1[2] + s2[2] + 1) >> 1;
@@ -3472,16 +3587,36 @@ void plm_video_copy_macroblock(
 				s2 += scan;
 			}
 		}
+		else if (odd_h)
+		{
+			uint8_t *d = (uint8_t *)dest;
+			uint8_t *s = (uint8_t *)(src + si);
+			int scan = dw;
+			for (int j = 8; j; j--)
+			{
+				__asm__("pref @%0" : : "r"(s + scan));
+				d[0] = (s[0] + s[1] + 1) >> 1;
+				d[1] = (s[1] + s[2] + 1) >> 1;
+				d[2] = (s[2] + s[3] + 1) >> 1;
+				d[3] = (s[3] + s[4] + 1) >> 1;
+				d[4] = (s[4] + s[5] + 1) >> 1;
+				d[5] = (s[5] + s[6] + 1) >> 1;
+				d[6] = (s[6] + s[7] + 1) >> 1;
+				d[7] = (s[7] + s[8] + 1) >> 1;
+				d += 8;
+				s += scan;
+			}
+		}
 		else
 		{
-			if (motion_h & 2)
+			if (hp & 1)
 			{
 				uint8_t *d = (uint8_t *)dest;
 				uint8_t *s = (uint8_t *)(src + si);
 				int scan = dw;
 				for (int j = 8; j; j--)
 				{
-					 __asm__ ("pref @%0" : : "r"(s + scan));
+					__asm__("pref @%0" : : "r"(s + scan));
 					d[0] = s[0];
 					d[1] = s[1];
 					d[2] = s[2];
@@ -3494,14 +3629,14 @@ void plm_video_copy_macroblock(
 					s += scan;
 				}
 			}
-			else if (motion_h & 4)
+			else if (hp & 2)
 			{
 				uint16_t *d = (uint16_t *)dest;
 				uint16_t *s = (uint16_t *)(src + si);
 				int scan = dw >> 1;
 				for (int j = 8; j; j--)
 				{
-					 __asm__ ("pref @%0" : : "r"(s + scan));
+					__asm__("pref @%0" : : "r"(s + scan));
 					d[0] = s[0];
 					d[1] = s[1];
 					d[2] = s[2];
@@ -3517,7 +3652,7 @@ void plm_video_copy_macroblock(
 				int scan = dw >> 2;
 				for (int j = 8; j; j--)
 				{
-					 __asm__ ("pref @%0" : : "r"(s + scan));
+					__asm__("pref @%0" : : "r"(s + scan));
 					d[0] = s[0];
 					d[1] = s[1];
 					d += 2;
@@ -3526,7 +3661,7 @@ void plm_video_copy_macroblock(
 			}
 		}
 		dest += 16;
-		 __asm__ ("pref @%0" : : "r"(dest));
+		__asm__("pref @%0" : : "r"(dest));
 		src = reference->cr.data;
 	}
 }
@@ -3665,7 +3800,7 @@ void plm_video_decode_block(plm_video_t *self, int block) {
 	}
 
 	int *s = self->block_data;
-	 __asm__("pref @%0" : : "r"(s));
+	__asm__("pref @%0" : : "r"(s));
 
 	if (self->macroblock_intra) {
 		// Overwrite (no prediction)
@@ -3739,72 +3874,88 @@ void plm_video_decode_block(plm_video_t *self, int block) {
 		}
 	}
 }
-
+// Ian micheal unrolled 2x
 void plm_video_idct(int *block) {
-	int
-		b1, b3, b4, b6, b7, tmp1, tmp2, m0,
-		x0, x1, x2, x3, x4, y3, y4, y5, y6, y7;
+    int x0, x1, x2, x3, x4, y3, y4, y5, y6, y7;
+    int b1, b3, b4, b6, b7, tmp1, tmp2, m0;
+    int i;
 
-	// Transform columns
-	for (int i = 0; i < 8; ++i) {
-		b1 = block[4 * 8 + i];
-		b3 = block[2 * 8 + i] + block[6 * 8 + i];
-		b4 = block[5 * 8 + i] - block[3 * 8 + i];
-		tmp1 = block[1 * 8 + i] + block[7 * 8 + i];
-		tmp2 = block[3 * 8 + i] + block[5 * 8 + i];
-		b6 = block[1 * 8 + i] - block[7 * 8 + i];
-		b7 = tmp1 + tmp2;
-		m0 = block[0 * 8 + i];
-		x4 = ((b6 * 473 - b4 * 196 + 128) >> 8) - b7;
-		x0 = x4 - (((tmp1 - tmp2) * 362 + 128) >> 8);
-		x1 = m0 - b1;
-		x2 = (((block[2 * 8 + i] - block[6 * 8 + i]) * 362 + 128) >> 8) - b3;
-		x3 = m0 + b1;
-		y3 = x1 + x2;
-		y4 = x3 + b3;
-		y5 = x1 - x2;
-		y6 = x3 - b3;
-		y7 = -x0 - ((b4 * 473 + b6 * 196 + 128) >> 8);
-		block[0 * 8 + i] = b7 + y4;
-		block[1 * 8 + i] = x4 + y3;
-		block[2 * 8 + i] = y5 - x0;
-		block[3 * 8 + i] = y6 - y7;
-		block[4 * 8 + i] = y6 + y7;
-		block[5 * 8 + i] = x0 + y5;
-		block[6 * 8 + i] = y3 - x4;
-		block[7 * 8 + i] = y4 - b7;
-	}
+    // Unrolled loop for columns
+    for (i = 0; i < 8; ++i) {
+        int *p = block + i;
 
-	// Transform rows
-	for (int i = 0; i < 64; i += 8) {
-		b1 = block[4 + i];
-		b3 = block[2 + i] + block[6 + i];
-		b4 = block[5 + i] - block[3 + i];
-		tmp1 = block[1 + i] + block[7 + i];
-		tmp2 = block[3 + i] + block[5 + i];
-		b6 = block[1 + i] - block[7 + i];
-		b7 = tmp1 + tmp2;
-		m0 = block[0 + i];
-		x4 = ((b6 * 473 - b4 * 196 + 128) >> 8) - b7;
-		x0 = x4 - (((tmp1 - tmp2) * 362 + 128) >> 8);
-		x1 = m0 - b1;
-		x2 = (((block[2 + i] - block[6 + i]) * 362 + 128) >> 8) - b3;
-		x3 = m0 + b1;
-		y3 = x1 + x2;
-		y4 = x3 + b3;
-		y5 = x1 - x2;
-		y6 = x3 - b3;
-		y7 = -x0 - ((b4 * 473 + b6 * 196 + 128) >> 8);
-		block[0 + i] = (b7 + y4 + 128) >> 8;
-		block[1 + i] = (x4 + y3 + 128) >> 8;
-		block[2 + i] = (y5 - x0 + 128) >> 8;
-		block[3 + i] = (y6 - y7 + 128) >> 8;
-		block[4 + i] = (y6 + y7 + 128) >> 8;
-		block[5 + i] = (x0 + y5 + 128) >> 8;
-		block[6 + i] = (y3 - x4 + 128) >> 8;
-		block[7 + i] = (y4 - b7 + 128) >> 8;
-	}
+        x0 = p[4 * 8];
+        x1 = p[2 * 8] + p[6 * 8];
+        x2 = p[5 * 8] - p[3 * 8];
+        tmp1 = p[1 * 8] + p[7 * 8];
+        tmp2 = p[3 * 8] + p[5 * 8];
+        b6 = p[1 * 8] - p[7 * 8];
+        b7 = tmp1 + tmp2;
+        m0 = p[0 * 8];
+        b4 = block[5 * 8 + i] - block[3 * 8 + i];
+        b1 = block[4 * 8 + i];
+        b3 = block[2 * 8 + i] + block[6 * 8 + i];
+
+        x4 = ((b6 * 473 - b4 * 196 + 128) >> 8) - b7;
+        x0 = x4 - (((tmp1 - tmp2) * 362 + 128) >> 8);
+        x1 = m0 - b1;
+        x2 = (((p[2 * 8] - p[6 * 8]) * 362 + 128) >> 8) - b3;
+        x3 = m0 + b1;
+        y3 = x1 + x2;
+        y4 = x3 + b3;
+        y5 = x1 - x2;
+        y6 = x3 - b3;
+        y7 = -x0 - ((b4 * 473 + b6 * 196 + 128) >> 8);
+
+        p[0 * 8] = b7 + y4;
+        p[1 * 8] = x4 + y3;
+        p[2 * 8] = y5 - x0;
+        p[3 * 8] = y6 - y7;
+        p[4 * 8] = y6 + y7;
+        p[5 * 8] = x0 + y5;
+        p[6 * 8] = y3 - x4;
+        p[7 * 8] = y4 - b7;
+    }
+
+    // Unrolled loop for rows
+    for (i = 0; i < 64; i += 8) {
+        int *p = block + i;
+
+        x0 = p[4];
+        x1 = p[2] + p[6];
+        x2 = p[5] - p[3];
+        tmp1 = p[1] + p[7];
+        tmp2 = p[3] + p[5];
+        b6 = p[1] - p[7];
+        b7 = tmp1 + tmp2;
+        m0 = p[0];
+        b4 = block[5 + i] - block[3 + i];
+        b1 = block[4 + i];
+        b3 = block[2 + i] + block[6 + i];
+
+        x4 = ((b6 * 473 - b4 * 196 + 128) >> 8) - b7;
+        x0 = x4 - (((tmp1 - tmp2) * 362 + 128) >> 8);
+        x1 = m0 - b1;
+        x2 = (((p[2] - p[6]) * 362 + 128) >> 8) - b3;
+        x3 = m0 + b1;
+        y3 = x1 + x2;
+        y4 = x3 + b3;
+        y5 = x1 - x2;
+        y6 = x3 - b3;
+        y7 = -x0 - ((b4 * 473 + b6 * 196 + 128) >> 8);
+
+        p[0] = (b7 + y4 + 128) >> 8;
+        p[1] = (x4 + y3 + 128) >> 8;
+        p[2] = (y5 - x0 + 128) >> 8;
+        p[3] = (y6 - y7 + 128) >> 8;
+        p[4] = (y6 + y7 + 128) >> 8;
+        p[5] = (x0 + y5 + 128) >> 8;
+        p[6] = (y3 - x4 + 128) >> 8;
+        p[7] = (y4 - b7 + 128) >> 8;
+    }
 }
+
+
 
 
 // YCbCr conversion following the BT.601 standard:
@@ -4422,18 +4573,18 @@ void plm_audio_decode_frame(plm_audio_t *self) {
 				int d_index = (512 - (self->v_pos >> 1)) >> 5;
 				int v_index = (self->v_pos % 128) >> 1;
 				float *d = &self->D[d_index];
-				float *v0 = &self->V[v_index];
-				float *v1 = &self->V[96 - v_index];
+				float *v1 = &self->V[v_index];
+				float *v2 = &self->V[96 - v_index];
 				for (int i = 32; i; --i)
 				{
 					float u;
-					u = pl_fipr(d[0], d[1], d[2], d[3], v0[0], v1[0], v0[128], v1[128]);
-					u += pl_fipr(d[4], d[5], d[6], d[7], v0[256], v1[256], v0[384], v1[384]);
-					u += pl_fipr(d[8], d[9], d[10], d[11], v0[512], v1[512], v0[640], v1[640]);
-					u += pl_fipr(d[12], d[13], d[14], d[15], v0[768], v1[768], v0[896], v1[896]);
+					u = pl_fipr(d[0], d[1], d[2], d[3], v1[0], v2[0], v1[128], v2[128]);
+					u += pl_fipr(d[4], d[5], d[6], d[7], v1[256], v2[256], v1[384], v2[384]);
+					u += pl_fipr(d[8], d[9], d[10], d[11], v1[512], v2[512], v1[640], v2[640]);
+					u += pl_fipr(d[12], d[13], d[14], d[15], v1[768], v2[768], v1[896], v2[896]);
 					d += 32;
-					v0++;
 					v1++;
+					v2++;
 					*out++ = (short)((int)u >> 16);
 				} // !! Monoral only !!
 
