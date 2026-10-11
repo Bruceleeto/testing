@@ -1,0 +1,2 @@
+Configured with: ../gcc-17.0.0/configure --target=sh-elf --prefix=/opt/toolchains/dc/sh-elf-testing --with-gnu-as --with-gnu-ld --with-newlib --disable-libssp --enable-threads=kos --enable-languages=c,c++ --enable-checking=release --with-multilib-list=m4-single,m4-single-only --with-endian=little --with-cpu=m4-single MAKEINFO=missing CC='cc -std=gnu17' CXX='g++ -std=gnu++14'
+gcc version 17.0.0 20260705 (experimental) (GCC) 

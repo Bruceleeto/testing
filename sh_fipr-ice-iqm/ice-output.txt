@@ -1,0 +1,15 @@
+during GIMPLE pass: sh_fipr
+repro_full.c: In function ‘ComputePoseMats’:
+repro_full.c:67:6: internal compiler error: Segmentation fault
+   67 | void ComputePoseMats( const model_t *data, int frame, int oldframe, float backlerp, float *poseMats ) {
+      |      ^~~~~~~~~~~~~~~
+0x7642c3845caf ???
+	./signal/../sysdeps/unix/sysv/linux/x86_64/libc_sigaction.c:0
+0x7642c382a600 __libc_start_call_main
+	../sysdeps/nptl/libc_start_call_main.h:59
+0x7642c382a717 __libc_start_main_impl
+	../csu/libc-start.c:360
+/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/cc1 -quiet repro_full.c -quiet -dumpbase repro_full.c -dumpbase-ext .c -m4-single -ml -O3 -ffast-math -o /tmp/ccihpLVz.s
+Please submit a full bug report, with preprocessed source (by using -freport-bug).
+Please include the complete backtrace with any bug report.
+See <https://gcc.gnu.org/bugs/> for instructions.
