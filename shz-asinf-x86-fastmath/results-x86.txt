@@ -1,0 +1,10 @@
+== -O2
+x  1.00000000  asinf  1.5707964  acosf  0.0000000
+x -1.00000000  asinf -1.5707964  acosf  3.1415927
+x  0.99999994  asinf  1.5704607  acosf  0.0003357
+x  0.50000000  asinf  0.5244716  acosf  1.0463247
+== -O2 -ffast-math
+x  1.00000000  asinf -nan  acosf -nan
+x -1.00000000  asinf -nan  acosf -nan
+x  0.99999994  asinf  1.5704607  acosf  0.0003357
+x  0.50000000  asinf  0.5244716  acosf  1.0463247

@@ -1,0 +1,2 @@
+36:	rsqrtss	%xmm1, %xmm1
+81:	rsqrtss	%xmm0, %xmm0
