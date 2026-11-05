@@ -1,0 +1,30 @@
+Using built-in specs.
+COLLECT_GCC=/opt/toolchains/dc/sh-elf-testing/bin/sh-elf-gcc
+Target: sh-elf
+Configured with: ../gcc-17.0.0/configure --target=sh-elf --prefix=/opt/toolchains/dc/sh-elf-testing --with-gnu-as --with-gnu-ld --with-newlib --disable-libssp --enable-threads=kos --enable-languages=c,c++ --enable-checking=release --with-multilib-list=m4-single,m4-single-only --with-endian=little --with-cpu=m4-single MAKEINFO=missing CC='cc -std=gnu17' CXX='g++ -std=gnu++14'
+Thread model: kos
+Supported LTO compression algorithms: zlib zstd
+gcc version 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing] (GCC) 
+COLLECT_GCC_OPTIONS='-v' '-O3' '-flto=auto' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-fbuiltin' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-D' '__DREAMCAST__' '-isystem' '/opt/toolchains/dc/kos/include' '-isystem' '/opt/toolchains/dc/kos/kernel/arch/dreamcast/include' '-isystem' '/opt/toolchains/dc/kos/addons/include/' '-isystem' '/opt/toolchains/dc/kos/../kos-ports/include' '-D' '_arch_dreamcast=1' '-D' '_arch_sub_pristine=1' '-Wall' '-g' '-c' '-o' 'inputs/main.o' '-dumpdir' 'inputs/'
+ /opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/cc1 -quiet -v -D __DREAMCAST__ -D _arch_dreamcast=1 -D _arch_sub_pristine=1 -isystem /opt/toolchains/dc/kos/include -isystem /opt/toolchains/dc/kos/kernel/arch/dreamcast/include -isystem /opt/toolchains/dc/kos/addons/include/ -isystem /opt/toolchains/dc/kos/../kos-ports/include main.c -quiet -dumpdir inputs/ -dumpbase main.c -dumpbase-ext .c -m4-single -ml -mfsrra -mfsca -matomic-model=soft-gusa -g -O3 -Wall -version -flto=auto -ffat-lto-objects -freorder-blocks-algorithm=simple -fipa-pta -fno-PIE -fomit-frame-pointer -fbuiltin -ffast-math -ffp-contract=fast -ffunction-sections -fdata-sections -ftls-model=local-exec -o /tmp/ccBALg6t.s
+GNU C23 (GCC) version 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing] (sh-elf)
+	compiled by GNU C version 15.2.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version none
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/sys-include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /opt/toolchains/dc/kos/include
+ /opt/toolchains/dc/kos/kernel/arch/dreamcast/include
+ /opt/toolchains/dc/kos/addons/include/
+ /opt/toolchains/dc/kos/../kos-ports/include
+ /opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/include
+ /opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/include-fixed
+ /opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/include
+End of search list.
+Compiler executable checksum: 9e3533ab6360d2aae360acb092a81e8e
+COLLECT_GCC_OPTIONS='-v' '-O3' '-flto=auto' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-fbuiltin' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-D' '__DREAMCAST__' '-isystem' '/opt/toolchains/dc/kos/include' '-isystem' '/opt/toolchains/dc/kos/kernel/arch/dreamcast/include' '-isystem' '/opt/toolchains/dc/kos/addons/include/' '-isystem' '/opt/toolchains/dc/kos/../kos-ports/include' '-D' '_arch_dreamcast=1' '-D' '_arch_sub_pristine=1' '-Wall' '-g' '-c' '-o' 'inputs/main.o' '-dumpdir' 'inputs/'
+ /opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/as -v -little --isa=sh4a -o inputs/main.o /tmp/ccBALg6t.s
+GNU assembler version 2.47 (sh-elf) using BFD version (GNU Binutils) 2.47.20260726
+COMPILER_PATH=/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/
+LIBRARY_PATH=/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/lib/
+COLLECT_GCC_OPTIONS='-v' '-O3' '-flto=auto' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-fbuiltin' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-D' '__DREAMCAST__' '-isystem' '/opt/toolchains/dc/kos/include' '-isystem' '/opt/toolchains/dc/kos/kernel/arch/dreamcast/include' '-isystem' '/opt/toolchains/dc/kos/addons/include/' '-isystem' '/opt/toolchains/dc/kos/../kos-ports/include' '-D' '_arch_dreamcast=1' '-D' '_arch_sub_pristine=1' '-Wall' '-g' '-c' '-o' 'inputs/main.o' '-dumpdir' 'inputs/main.'

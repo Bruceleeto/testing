@@ -1,0 +1,46 @@
+# Static check only (not run): each line is a link from inputs/ with the build.sh flags plus the switches named;
+# BAD = in pvr_int_handler the 0x100 mask register is overwritten before the second tst that reads it (check-loop.py).
+default -mno-ams: good
+default -mno-ams-postra: BAD
+default -mno-copy-elim: BAD
+default -mno-treg-bits: BAD
+default -mno-auto-mac: BAD
+default -mno-auto-fipr: BAD
+default -mno-fipr-cycles: BAD
+default -mno-vec-fmovd: BAD
+default -mno-vec-lane: BAD
+default -mno-mode-group: BAD
+default -mno-mode-fold: BAD
+default -mno-fpscr-fuse: BAD
+default -mno-const-remat: BAD
+default -mno-loop-const-hoist: good
+default -mno-const-synth: BAD
+default -mno-mem-equiv: BAD
+default -mno-sett-clrt: BAD
+default -mno-unfactor-gbr: BAD
+---- no-sh-opts + treg-combine + one
+-mno-sh-opts -mtreg-combine -mams: good
+-mno-sh-opts -mtreg-combine -mams-postra: good
+-mno-sh-opts -mtreg-combine -mcopy-elim: good
+-mno-sh-opts -mtreg-combine -mtreg-bits: good
+-mno-sh-opts -mtreg-combine -mauto-mac: good
+-mno-sh-opts -mtreg-combine -mauto-fipr: good
+-mno-sh-opts -mtreg-combine -mfipr-cycles: good
+-mno-sh-opts -mtreg-combine -mvec-fmovd: good
+-mno-sh-opts -mtreg-combine -mvec-lane: good
+-mno-sh-opts -mtreg-combine -mmode-group: good
+-mno-sh-opts -mtreg-combine -mmode-fold: good
+-mno-sh-opts -mtreg-combine -mfpscr-fuse: good
+-mno-sh-opts -mtreg-combine -mconst-remat: good
+-mno-sh-opts -mtreg-combine -mloop-const-hoist: good
+-mno-sh-opts -mtreg-combine -mconst-synth: good
+-mno-sh-opts -mtreg-combine -mmem-equiv: good
+-mno-sh-opts -mtreg-combine -msett-clrt: good
+-mno-sh-opts -mtreg-combine -munfactor-gbr: good
+
+[exited with code 0]
+---- combinations
+-mno-sh-opts -mtreg-combine -mams -mloop-const-hoist: BAD
+-mno-sh-opts -mams -mloop-const-hoist: good
+-mno-sh-opts -mtreg-combine -mams: good
+-mno-sh-opts -mtreg-combine -mloop-const-hoist: good

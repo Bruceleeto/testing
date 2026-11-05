@@ -1,0 +1,189 @@
+Raw dc-tool-ip console output as run by the reporter on a Dreamcast (Broadband Adapter HIT-0400, dcload-ip 2.0.3).
+Interrupted uploads (^C before execution) are kept as they happened.
+
+bruce@bruce-HP-Z240-Tower-Workstation:~/Downloads/testing/treg-combine-timer-loop$ dc-tool-ip -t 192.168.0.178 -f -x builds/good/prog.elf
+Enabling fast transfer mode
+Console enabled
+Upload <builds/good/prog.elf>
+File format is ELF, start address is 0x8c010000
+Section .text, lma 0x8c010000, size 184668
+dcload-ip 2.0.3 using Broadband Adapter (HIT-0400)
+Section .init, lma 0x8c03e000, size 54
+Section .fini, lma 0x8c03e038, size 42
+Section .rodata, lma 0x8c03e064, size 20480
+Section .eh_frame, lma 0x8c043064, size 452
+Section .ctors, lma 0x8c0432a8, size 12
+Section .dtors, lma 0x8c0432b4, size 8
+Section .data, lma 0x8c0432bc, size 5564
+Section .got, lma 0x8c044878, size 12
+Transferred 211292 bytes at 81581780.426033 bytes / sec
+Executing at <0xac010000>
+Sending execute command (0xac010000, console=1, cdfsredir=0)...executing
+
+--
+KallistiOS v2.3.0 [dreamcast/pristine]
+  Git revision: 6e0b2240-dirty
+  Thu Nov  5 11:54:51 AM GMT 2026
+  bruce@bruce-HP-Z240-Tower-Workstation:/opt/toolchains/dc/kos
+  sh-elf-gcc (GCC) 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing]
+maple: active drivers:
+    Dreameye (Camera): Camera
+    Sound Input Peripheral: Microphone
+    PuruPuru (Vibration) Pack: JumpPack
+    VMU Driver: Clock, LCD, MemoryCard
+    Mouse Driver: Mouse
+    Keyboard Driver: Keyboard
+    Controller Driver: Controller
+    Lightgun: LightGun
+vid_set_mode: 640x480 VGA with 1 framebuffers.
+dc-load console support enabled
+maple: attached devices:
+  A0: Dreamcast Controller           (01000000: Controller)
+  A1: Visual Memory                  (0e000000: Clock, LCD, MemoryCard)
+
+120 frames: 2617461 cycles = 13 ms (PASS)
+bruce@bruce-HP-Z240-Tower-Workstation:~/Downloads/testing/treg-combine-timer-loop$ dc-tool-ip -t 192.168.0.178 -f -x builds/no-sh-opts/prog.elf
+Enabling fast transfer mode
+Console enabled
+Upload <builds/no-sh-opts/prog.elf>
+File format is ELF, start address is 0x8c010000
+Section .text, lma 0x8c010000, size 186108
+^C
+bruce@bruce-HP-Z240-Tower-Workstation:~/Downloads/testing/treg-combine-timer-loop$ dc-tool-ip -t 192.168.0.178 -f -x builds/no-sh-opts/prog.elf
+Enabling fast transfer mode
+Console enabled
+Upload <builds/no-sh-opts/prog.elf>
+File format is ELF, start address is 0x8c010000
+Section .text, lma 0x8c010000, size 186108
+dcload-ip 2.0.3 using Broadband Adapter (HIT-0400)
+Section .init, lma 0x8c03e000, size 54
+Section .fini, lma 0x8c03e038, size 42
+Section .rodata, lma 0x8c03e064, size 20480
+Section .eh_frame, lma 0x8c043064, size 452
+Section .ctors, lma 0x8c0432a8, size 12
+Section .dtors, lma 0x8c0432b4, size 8
+Section .data, lma 0x8c0432bc, size 5564
+Section .got, lma 0x8c044878, size 12
+Transferred 212732 bytes at 82137777.642272 bytes / sec
+Executing at <0xac010000>
+Sending execute command (0xac010000, console=1, cdfsredir=0)...executing
+
+--
+KallistiOS v2.3.0 [dreamcast/pristine]
+  Git revision: 6e0b2240-dirty
+  Thu Nov  5 11:54:51 AM GMT 2026
+  bruce@bruce-HP-Z240-Tower-Workstation:/opt/toolchains/dc/kos
+  sh-elf-gcc (GCC) 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing]
+maple: active drivers:
+    Dreameye (Camera): Camera
+    Sound Input Peripheral: Microphone
+    PuruPuru (Vibration) Pack: JumpPack
+    VMU Driver: Clock, LCD, MemoryCard
+    Mouse Driver: Mouse
+    Keyboard Driver: Keyboard
+    Controller Driver: Controller
+    Lightgun: LightGun
+vid_set_mode: 640x480 VGA with 1 framebuffers.
+dc-load console support enabled
+maple: attached devices:
+  A0: Dreamcast Controller           (01000000: Controller)
+  A1: Visual Memory                  (0e000000: Clock, LCD, MemoryCard)
+
+120 frames: 2839616 cycles = 14 ms (PASS)
+bruce@bruce-HP-Z240-Tower-Workstation:~/Downloads/testing/treg-combine-timer-loop$ dc-tool-ip -t 192.168.0.178 -f -x "builds/no-sh-opts+treg-combine/prog.elf"
+Enabling fast transfer mode
+Console enabled
+Upload <builds/no-sh-opts+treg-combine/prog.elf>
+File format is ELF, start address is 0x8c010000
+Section .text, lma 0x8c010000, size 185948
+dcload-ip 2.0.3 using Broadband Adapter (HIT-0400)
+Section .init, lma 0x8c03e000, size 54
+Section .fini, lma 0x8c03e038, size 42
+Section .rodata, lma 0x8c03e064, size 20480
+Section .eh_frame, lma 0x8c043064, size 452
+Section .ctors, lma 0x8c0432a8, size 12
+Section .dtors, lma 0x8c0432b4, size 8
+Section .data, lma 0x8c0432bc, size 5564
+Section .got, lma 0x8c044878, size 12
+Transferred 212572 bytes at 82907903.095406 bytes / sec
+Executing at <0xac010000>
+Sending execute command (0xac010000, console=1, cdfsredir=0)...executing
+
+--
+KallistiOS v2.3.0 [dreamcast/pristine]
+  Git revision: 6e0b2240-dirty
+  Thu Nov  5 11:54:51 AM GMT 2026
+  bruce@bruce-HP-Z240-Tower-Workstation:/opt/toolchains/dc/kos
+  sh-elf-gcc (GCC) 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing]
+maple: active drivers:
+    Dreameye (Camera): Camera
+    Sound Input Peripheral: Microphone
+    PuruPuru (Vibration) Pack: JumpPack
+    VMU Driver: Clock, LCD, MemoryCard
+    Mouse Driver: Mouse
+    Keyboard Driver: Keyboard
+    Controller Driver: Controller
+    Lightgun: LightGun
+vid_set_mode: 640x480 VGA with 1 framebuffers.
+dc-load console support enabled
+maple: attached devices:
+  A0: Dreamcast Controller           (01000000: Controller)
+  A1: Visual Memory                  (0e000000: Clock, LCD, MemoryCard)
+
+120 frames: 2686717 cycles = 13 ms (PASS)
+bruce@bruce-HP-Z240-Tower-Workstation:~/Downloads/testing/treg-combine-timer-loop$ dc-tool-ip -t 192.168.0.178 -f -x builds/bad/prog.elf
+Enabling fast transfer mode
+Console enabled
+Upload <builds/bad/prog.elf>
+File format is ELF, start address is 0x8c010000
+Section .text, lma 0x8c010000, size 184508
+dcload-ip 2.0.3 using Broadband Adapter (HIT-0400)
+^C
+bruce@bruce-HP-Z240-Tower-Workstation:~/Downloads/testing/treg-combine-timer-loop$ dc-tool-ip -t 192.168.0.178 -f -x builds/bad/prog.elf
+Enabling fast transfer mode
+Console enabled
+Upload <builds/bad/prog.elf>
+File format is ELF, start address is 0x8c010000
+Section .text, lma 0x8c010000, size 184508
+^C
+bruce@bruce-HP-Z240-Tower-Workstation:~/Downloads/testing/treg-combine-timer-loop$ dc-tool-ip -t 192.168.0.178 -f -x builds/bad/prog.elf
+Enabling fast transfer mode
+Console enabled
+Upload <builds/bad/prog.elf>
+File format is ELF, start address is 0x8c010000
+Section .text, lma 0x8c010000, size 184508
+dcload-ip 2.0.3 using Broadband Adapter (HIT-0400)
+Section .init, lma 0x8c03e000, size 54
+Section .fini, lma 0x8c03e038, size 42
+Section .rodata, lma 0x8c03e064, size 20480
+Section .eh_frame, lma 0x8c043064, size 452
+Section .ctors, lma 0x8c0432a8, size 12
+Section .dtors, lma 0x8c0432b4, size 8
+Section .data, lma 0x8c0432bc, size 5564
+Section .got, lma 0x8c044878, size 12
+Transferred 211132 bytes at 81647777.256869 bytes / sec
+Executing at <0xac010000>
+Sending execute command (0xac010000, console=1, cdfsredir=0)...executing
+
+--
+KallistiOS v2.3.0 [dreamcast/pristine]
+  Git revision: 6e0b2240-dirty
+  Thu Nov  5 11:54:51 AM GMT 2026
+  bruce@bruce-HP-Z240-Tower-Workstation:/opt/toolchains/dc/kos
+  sh-elf-gcc (GCC) 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing]
+maple: active drivers:
+    Dreameye (Camera): Camera
+    Sound Input Peripheral: Microphone
+    PuruPuru (Vibration) Pack: JumpPack
+    VMU Driver: Clock, LCD, MemoryCard
+    Mouse Driver: Mouse
+    Keyboard Driver: Keyboard
+    Controller Driver: Controller
+    Lightgun: LightGun
+vid_set_mode: 640x480 VGA with 1 framebuffers.
+dc-load console support enabled
+maple: attached devices:
+  A0: Dreamcast Controller           (01000000: Controller)
+  A1: Visual Memory                  (0e000000: Clock, LCD, MemoryCard)
+
+120 frames: 23346286900 cycles = 116731 ms (FAIL)

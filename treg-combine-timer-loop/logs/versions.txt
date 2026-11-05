@@ -1,0 +1,8 @@
+KallistiOS: 6e0b224068d909252f27f811622fb7b38b40955a (Sun Nov 1 21:44:37 2026 +0000), reported as v2.3.0 6e0b2240-dirty
+  working tree changes:
+     M utils/kos-chain/patches/targets/newlib-4.6.0.20260123-kos.diff
+  libkallisti.a built: 2026-11-05 11:55:49.405565782 +0000
+newlib: 4.6.0 (_NEWLIB_VERSION), patch utils/kos-chain/patches/targets/newlib-4.6.0.20260123-kos.diff
+kos-ports: f4faacc42faaf552625777b7709e871a827e1055 (not linked)
+Flycast: v2.6-525-ga2747adf6 (headless on Xvfb)
+Hardware: Dreamcast, Broadband Adapter HIT-0400, dcload-ip 2.0.3, loaded with dc-tool-ip -t <ip> -f -x prog.elf

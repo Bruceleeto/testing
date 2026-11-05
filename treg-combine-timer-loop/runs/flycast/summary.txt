@@ -1,0 +1,4 @@
+good: 120 frames: 0 cycles = 0 ms (PASS) | wall from launch 4.0755 s
+no-sh-opts: 120 frames: 0 cycles = 0 ms (PASS) | wall from launch 4.0530 s
+no-sh-opts+treg-combine: 120 frames: 0 cycles = 0 ms (PASS) | wall from launch 4.0495 s
+bad: 120 frames: 0 cycles = 0 ms (PASS) | wall from launch 118.78 s

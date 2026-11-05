@@ -1,0 +1,206 @@
+Using built-in specs.
+COLLECT_GCC=/opt/toolchains/dc/sh-elf-testing/bin/sh-elf-gcc
+COLLECT_LTO_WRAPPER=/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/lto-wrapper
+Target: sh-elf
+Configured with: ../gcc-17.0.0/configure --target=sh-elf --prefix=/opt/toolchains/dc/sh-elf-testing --with-gnu-as --with-gnu-ld --with-newlib --disable-libssp --enable-threads=kos --enable-languages=c,c++ --enable-checking=release --with-multilib-list=m4-single,m4-single-only --with-endian=little --with-cpu=m4-single MAKEINFO=missing CC='cc -std=gnu17' CXX='g++ -std=gnu++14'
+Thread model: kos
+Supported LTO compression algorithms: zlib zstd
+gcc version 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing] (GCC) 
+COMPILER_PATH=/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/
+LIBRARY_PATH=/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/lib/
+COLLECT_GCC_OPTIONS='-v' '-O3' '-flto=auto' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-fbuiltin' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-Wall' '-g' '-T' './shlelf.xc' '-nostdlib' '-L.' '-save-temps' '-flto-partition=one' '-fdump-rtl-final' '-o' './prog.elf' '-dumpdir' './prog.elf.'
+ /opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/collect2 -plugin /opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/liblto_plugin.so -plugin-opt=/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/lto-wrapper -plugin-opt=-fresolution=./prog.elf.res -flto=auto -m shlelf -o ./prog.elf -L. -L/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0 -L/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/lib --gc-sections ./main.o -Map=./prog.map --start-group -lkallisti -lm -lc -lgcc --end-group -T ./shlelf.xc
+/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/lto-wrapper -fresolution=./prog.elf.res -flinker-output=exec ./main.o ./libkallisti.a@0x47e1ea ./libkallisti.a@0x4969c2 ./libkallisti.a@0x4a0bfe ./libkallisti.a@0x4d5006 ./libkallisti.a@0x50cdf6 ./libkallisti.a@0x51bd6a ./libkallisti.a@0x52e132 ./libkallisti.a@0x54c40e ./libkallisti.a@0x555e42 ./libkallisti.a@0x55f132 ./libkallisti.a@0x56338e ./libkallisti.a@0x576682 ./libkallisti.a@0x585a02 ./libkallisti.a@0x592826 ./libkallisti.a@0x6758d6 ./libkallisti.a@0x6bb7b2 ./libkallisti.a@0x6e9a82 ./libkallisti.a@0x70d376 ./libkallisti.a@0x71c4d6 ./libkallisti.a@0x768f2a ./libkallisti.a@0x77cc9e ./libkallisti.a@0x790ffa ./libkallisti.a@0x79f102 ./libkallisti.a@0x7a78ee ./libkallisti.a@0x7b2472 ./libkallisti.a@0x800092 ./libkallisti.a@0x834f7e ./libkallisti.a@0x8a112a ./libkallisti.a@0x8b513a ./libkallisti.a@0x8c45a2 ./libkallisti.a@0x8d08da ./libkallisti.a@0x8e100e ./libkallisti.a@0x91ab66 ./libkallisti.a@0x926b5e ./libkallisti.a@0x935516 ./libkallisti.a@0x93da26 ./libkallisti.a@0x96cb46 ./libkallisti.a@0x99a76e ./libkallisti.a@0x9dd436 ./libkallisti.a@0x9e28f2 ./libkallisti.a@0xa3411a ./libkallisti.a@0xa73aee ./libkallisti.a@0xa7fd5e ./libkallisti.a@0xa90222 ./libkallisti.a@0xaa2616 ./libkallisti.a@0xaf55aa ./libkallisti.a@0xb076aa ./libkallisti.a@0xb10d22 ./libkallisti.a@0xb2fd36 ./libkallisti.a@0xb6d9f2 ./libkallisti.a@0xba0072 ./libkallisti.a@0xbb5a32 ./libkallisti.a@0xbc4a26 ./libkallisti.a@0xeeaeb6 ./libkallisti.a@0xeffd96 ./libkallisti.a@0xf06b4a ./libkallisti.a@0xf0c53e ./libkallisti.a@0xf1f2ca ./libkallisti.a@0xf6429a ./libkallisti.a@0xfb8a32 ./libkallisti.a@0xfcc59e ./libkallisti.a@0x8962 ./libkallisti.a@0x36316 ./libkallisti.a@0x490fa ./libkallisti.a@0x4dfd2 ./libkallisti.a@0x72ff6 ./libkallisti.a@0xda7ee ./libkallisti.a@0x138efe ./libkallisti.a@0x1441fe ./libkallisti.a@0x1591b6 ./libkallisti.a@0x16793a ./libkallisti.a@0x169906 ./libkallisti.a@0x176bc6 ./libkallisti.a@0x17a70e ./libkallisti.a@0x1979a6 ./libkallisti.a@0x1a7a76 ./libkallisti.a@0x1c2efe ./libkallisti.a@0x1dd28a ./libkallisti.a@0x1e329e ./libkallisti.a@0x20d1e2 ./libkallisti.a@0x23b0b6 ./libkallisti.a@0x25136e ./libkallisti.a@0x25ccce ./libkallisti.a@0x28fd3e ./libkallisti.a@0x29f42a ./libkallisti.a@0x2bd55e ./libkallisti.a@0x2e1fe2 ./libkallisti.a@0x2f3c0a ./libkallisti.a@0x3132a6 ./libkallisti.a@0x3311d6 ./libkallisti.a@0x3396e2 ./libkallisti.a@0x38acf2 ./libkallisti.a@0x39a03e ./libkallisti.a@0x42c9fa ./libkallisti.a@0x4524d2 ./libkallisti.a@0x45c646 ./libkallisti.a@0x4b7e5a ./libkallisti.a@0x4ed8d2 ./libkallisti.a@0x679f9a ./libkallisti.a@0x6fe4f6 ./libkallisti.a@0x717ea6 ./libkallisti.a@0x738a82 ./libkallisti.a@0x746aae ./libkallisti.a@0x7637e6 ./libkallisti.a@0x8ee7d2 ./libkallisti.a@0x8fa106 ./libkallisti.a@0x90a4fe ./libkallisti.a@0x915d92 ./libkallisti.a@0xb1f996 ./libkallisti.a@0xf4f9ae ./libkallisti.a@0xf8f812 ./libkallisti.a@0xfc0942 ./libkallisti.a@0xabe2 ./libkallisti.a@0x80d7a ./libkallisti.a@0xaec76 ./libkallisti.a@0x1d712a ./libkallisti.a@0x1eb716 ./libkallisti.a@0x35c3e2 ./libkallisti.a@0x46d956 ./libkallisti.a@0x5a0ae6 ./libkallisti.a@0x5c7eae ./libkallisti.a@0x5fabd2 ./libkallisti.a@0x60a662 ./libkallisti.a@0x62495e ./libkallisti.a@0x640a1a ./libkallisti.a@0x981b32 ./libkallisti.a@0x9846b2 ./libkallisti.a@0x9b4dc2 ./libkallisti.a@0x9fb066 ./libkallisti.a@0xa27fbe ./libkallisti.a@0xa44166 ./libkallisti.a@0xa4c62a ./libkallisti.a@0xaadf46 ./libkallisti.a@0xacc2ea ./libkallisti.a@0x52295a ./libkallisti.a@0x829e5a ./libkallisti.a@0x837f8a ./libkallisti.a@0x8416f2 ./libkallisti.a@0x848186 ./libkallisti.a@0x84de26 ./libkallisti.a@0x852532 ./libkallisti.a@0x858fa2 ./libkallisti.a@0x861892 ./libkallisti.a@0x86b04a ./libkallisti.a@0x86fee2 ./libkallisti.a@0x87649a ./libkallisti.a@0x87b24e ./libkallisti.a@0x88010a ./libkallisti.a@0x89c242 
+/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/lto-wrapper -fresolution=./prog.elf.res -flinker-output=exec ./main.o ./libkallisti.a@0x47e1ea ./libkallisti.a@0x4969c2 ./libkallisti.a@0x4a0bfe ./libkallisti.a@0x4d5006 ./libkallisti.a@0x50cdf6 ./libkallisti.a@0x51bd6a ./libkallisti.a@0x52e132 ./libkallisti.a@0x54c40e ./libkallisti.a@0x555e42 ./libkallisti.a@0x55f132 ./libkallisti.a@0x56338e ./libkallisti.a@0x576682 ./libkallisti.a@0x585a02 ./libkallisti.a@0x592826 ./libkallisti.a@0x6758d6 ./libkallisti.a@0x6bb7b2 ./libkallisti.a@0x6e9a82 ./libkallisti.a@0x70d376 ./libkallisti.a@0x71c4d6 ./libkallisti.a@0x768f2a ./libkallisti.a@0x77cc9e ./libkallisti.a@0x790ffa ./libkallisti.a@0x79f102 ./libkallisti.a@0x7a78ee ./libkallisti.a@0x7b2472 ./libkallisti.a@0x800092 ./libkallisti.a@0x834f7e ./libkallisti.a@0x8a112a ./libkallisti.a@0x8b513a ./libkallisti.a@0x8c45a2 ./libkallisti.a@0x8d08da ./libkallisti.a@0x8e100e ./libkallisti.a@0x91ab66 ./libkallisti.a@0x926b5e ./libkallisti.a@0x935516 ./libkallisti.a@0x93da26 ./libkallisti.a@0x96cb46 ./libkallisti.a@0x99a76e ./libkallisti.a@0x9dd436 ./libkallisti.a@0x9e28f2 ./libkallisti.a@0xa3411a ./libkallisti.a@0xa73aee ./libkallisti.a@0xa7fd5e ./libkallisti.a@0xa90222 ./libkallisti.a@0xaa2616 ./libkallisti.a@0xaf55aa ./libkallisti.a@0xb076aa ./libkallisti.a@0xb10d22 ./libkallisti.a@0xb2fd36 ./libkallisti.a@0xb6d9f2 ./libkallisti.a@0xba0072 ./libkallisti.a@0xbb5a32 ./libkallisti.a@0xbc4a26 ./libkallisti.a@0xeeaeb6 ./libkallisti.a@0xeffd96 ./libkallisti.a@0xf06b4a ./libkallisti.a@0xf0c53e ./libkallisti.a@0xf1f2ca ./libkallisti.a@0xf6429a ./libkallisti.a@0xfb8a32 ./libkallisti.a@0xfcc59e ./libkallisti.a@0x8962 ./libkallisti.a@0x36316 ./libkallisti.a@0x490fa ./libkallisti.a@0x4dfd2 ./libkallisti.a@0x72ff6 ./libkallisti.a@0xda7ee ./libkallisti.a@0x138efe ./libkallisti.a@0x1441fe ./libkallisti.a@0x1591b6 ./libkallisti.a@0x16793a ./libkallisti.a@0x169906 ./libkallisti.a@0x176bc6 ./libkallisti.a@0x17a70e ./libkallisti.a@0x1979a6 ./libkallisti.a@0x1a7a76 ./libkallisti.a@0x1c2efe ./libkallisti.a@0x1dd28a ./libkallisti.a@0x1e329e ./libkallisti.a@0x20d1e2 ./libkallisti.a@0x23b0b6 ./libkallisti.a@0x25136e ./libkallisti.a@0x25ccce ./libkallisti.a@0x28fd3e ./libkallisti.a@0x29f42a ./libkallisti.a@0x2bd55e ./libkallisti.a@0x2e1fe2 ./libkallisti.a@0x2f3c0a ./libkallisti.a@0x3132a6 ./libkallisti.a@0x3311d6 ./libkallisti.a@0x3396e2 ./libkallisti.a@0x38acf2 ./libkallisti.a@0x39a03e ./libkallisti.a@0x42c9fa ./libkallisti.a@0x4524d2 ./libkallisti.a@0x45c646 ./libkallisti.a@0x4b7e5a ./libkallisti.a@0x4ed8d2 ./libkallisti.a@0x679f9a ./libkallisti.a@0x6fe4f6 ./libkallisti.a@0x717ea6 ./libkallisti.a@0x738a82 ./libkallisti.a@0x746aae ./libkallisti.a@0x7637e6 ./libkallisti.a@0x8ee7d2 ./libkallisti.a@0x8fa106 ./libkallisti.a@0x90a4fe ./libkallisti.a@0x915d92 ./libkallisti.a@0xb1f996 ./libkallisti.a@0xf4f9ae ./libkallisti.a@0xf8f812 ./libkallisti.a@0xfc0942 ./libkallisti.a@0xabe2 ./libkallisti.a@0x80d7a ./libkallisti.a@0xaec76 ./libkallisti.a@0x1d712a ./libkallisti.a@0x1eb716 ./libkallisti.a@0x35c3e2 ./libkallisti.a@0x46d956 ./libkallisti.a@0x5a0ae6 ./libkallisti.a@0x5c7eae ./libkallisti.a@0x5fabd2 ./libkallisti.a@0x60a662 ./libkallisti.a@0x62495e ./libkallisti.a@0x640a1a ./libkallisti.a@0x981b32 ./libkallisti.a@0x9846b2 ./libkallisti.a@0x9b4dc2 ./libkallisti.a@0x9fb066 ./libkallisti.a@0xa27fbe ./libkallisti.a@0xa44166 ./libkallisti.a@0xa4c62a ./libkallisti.a@0xaadf46 ./libkallisti.a@0xacc2ea ./libkallisti.a@0x52295a ./libkallisti.a@0x829e5a ./libkallisti.a@0x837f8a ./libkallisti.a@0x8416f2 ./libkallisti.a@0x848186 ./libkallisti.a@0x84de26 ./libkallisti.a@0x852532 ./libkallisti.a@0x858fa2 ./libkallisti.a@0x861892 ./libkallisti.a@0x86b04a ./libkallisti.a@0x86fee2 ./libkallisti.a@0x87649a ./libkallisti.a@0x87b24e ./libkallisti.a@0x88010a ./libkallisti.a@0x89c242 
+LTO parallelism level set to 8
+/opt/toolchains/dc/sh-elf-testing/bin/sh-elf-gcc @./prog.elf.ltrans_args
+Using built-in specs.
+COLLECT_GCC=/opt/toolchains/dc/sh-elf-testing/bin/sh-elf-gcc
+Target: sh-elf
+Configured with: ../gcc-17.0.0/configure --target=sh-elf --prefix=/opt/toolchains/dc/sh-elf-testing --with-gnu-as --with-gnu-ld --with-newlib --disable-libssp --enable-threads=kos --enable-languages=c,c++ --enable-checking=release --with-multilib-list=m4-single,m4-single-only --with-endian=little --with-cpu=m4-single MAKEINFO=missing CC='cc -std=gnu17' CXX='g++ -std=gnu++14'
+Thread model: kos
+Supported LTO compression algorithms: zlib zstd
+gcc version 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing] (GCC) 
+COLLECT_GCC_OPTIONS='-c' '-fno-openmp' '-fno-openacc' '-fcf-protection=none' '-g' '-m4-single' '-ml' '-matomic-model=soft-gusa' '-O3' '-v' '-O3' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-g' '-T' './shlelf.xc' '-nostdlib' '-L.' '-save-temps' '-flto-partition=one' '-fdump-rtl-final'   '-fltrans-output-list=./prog.elf.ltrans.out' '-fwpa=8' '-fresolution=./prog.elf.res' '-flinker-output=exec'
+ /opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/lto1 -quiet -dumpbase ./prog.elf.wpa -m4-single -ml -matomic-model=soft-gusa -m4-single -ml -mfsrra -mfsca -matomic-model=soft-gusa -g -g -O3 -O3 -version -fno-openmp -fno-openacc -fcf-protection=none -ffat-lto-objects -freorder-blocks-algorithm=simple -fipa-pta -fno-PIE -fomit-frame-pointer -ffast-math -ffp-contract=fast -ffunction-sections -fdata-sections -ftls-model=local-exec -flto-partition=one -fdump-rtl-final -fltrans-output-list=./prog.elf.ltrans.out -fwpa=8 -fresolution=./prog.elf.res -flinker-output=exec @./prog.elf.wpa.args.0
+GNU GIMPLE (GCC) version 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing] (sh-elf)
+	compiled by GNU C version 15.2.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version none
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+COMPILER_PATH=/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/
+LIBRARY_PATH=/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/lib/
+COLLECT_GCC_OPTIONS='-c' '-fno-openmp' '-fno-openacc' '-fcf-protection=none' '-g' '-m4-single' '-ml' '-matomic-model=soft-gusa' '-O3' '-v' '-O3' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-g' '-T' './shlelf.xc' '-nostdlib' '-L.' '-save-temps' '-flto-partition=one' '-fdump-rtl-final'   '-fltrans-output-list=./prog.elf.ltrans.out' '-fwpa=8' '-fresolution=./prog.elf.res' '-flinker-output=exec' '-dumpdir' './prog.elf.wpa.'
+[Leaving LTRANS ./prog.elf.ltrans.out]
+make -f ./prog.elf.ltrans.mk -j8 all
+Using built-in specs.
+COLLECT_GCC=/opt/toolchains/dc/sh-elf-testing/bin/sh-elf-gcc
+Target: sh-elf
+Configured with: ../gcc-17.0.0/configure --target=sh-elf --prefix=/opt/toolchains/dc/sh-elf-testing --with-gnu-as --with-gnu-ld --with-newlib --disable-libssp --enable-threads=kos --enable-languages=c,c++ --enable-checking=release --with-multilib-list=m4-single,m4-single-only --with-endian=little --with-cpu=m4-single MAKEINFO=missing CC='cc -std=gnu17' CXX='g++ -std=gnu++14'
+Thread model: kos
+Supported LTO compression algorithms: zlib zstd
+gcc version 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing] (GCC) 
+COLLECT_GCC_OPTIONS='-c' '-fno-openmp' '-fno-openacc' '-fcf-protection=none' '-g' '-m4-single' '-ml' '-matomic-model=soft-gusa' '-O3' '-v' '-O3' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-g' '-T' './shlelf.xc' '-nostdlib' '-L.' '-save-temps' '-flto-partition=one' '-fdump-rtl-final'   '-fltrans' '-o' './prog.elf.ltrans0.ltrans.o'
+ /opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/lto1 -quiet -dumpbase ./prog.elf.ltrans0.ltrans -m4-single -ml -matomic-model=soft-gusa -m4-single -ml -mfsrra -mfsca -matomic-model=soft-gusa -g -g -O3 -O3 -version -fno-openmp -fno-openacc -fcf-protection=none -ffat-lto-objects -freorder-blocks-algorithm=simple -fipa-pta -fno-PIE -fomit-frame-pointer -ffast-math -ffp-contract=fast -ffunction-sections -fdata-sections -ftls-model=local-exec -flto-partition=one -fdump-rtl-final -fltrans ./prog.elf.ltrans0.o -o ./prog.elf.ltrans0.ltrans.s
+GNU GIMPLE (GCC) version 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing] (sh-elf)
+	compiled by GNU C version 15.2.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version none
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+COLLECT_GCC_OPTIONS='-c' '-fno-openmp' '-fno-openacc' '-fcf-protection=none' '-g' '-m4-single' '-ml' '-matomic-model=soft-gusa' '-O3' '-v' '-O3' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-g' '-T' './shlelf.xc' '-nostdlib' '-L.' '-save-temps' '-flto-partition=one' '-fdump-rtl-final'   '-fltrans' '-o' './prog.elf.ltrans0.ltrans.o'
+ /opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/as -v -little --isa=sh4a -o ./prog.elf.ltrans0.ltrans.o ./prog.elf.ltrans0.ltrans.s
+GNU assembler version 2.47 (sh-elf) using BFD version (GNU Binutils) 2.47.20260726
+COMPILER_PATH=/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/libexec/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/bin/
+LIBRARY_PATH=/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/:/opt/toolchains/dc/sh-elf-testing/lib/gcc/sh-elf/17.0.0/../../../../sh-elf/lib/
+COLLECT_GCC_OPTIONS='-c' '-fno-openmp' '-fno-openacc' '-fcf-protection=none' '-g' '-m4-single' '-ml' '-matomic-model=soft-gusa' '-O3' '-v' '-O3' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-g' '-T' './shlelf.xc' '-nostdlib' '-L.' '-save-temps' '-flto-partition=one' '-fdump-rtl-final'   '-fltrans' '-o' './prog.elf.ltrans0.ltrans.o' '-dumpdir' './prog.elf.ltrans0.ltrans.'
+[Leaving LTRANS ./prog.elf.ltrans.mk]
+[Leaving LTRANS ./prog.elf.ltrans0.o]
+[Leaving ./prog.elf.lto_wrapper_args]
+[Leaving ./prog.elf.ltrans0.ltrans.o]
+[Leaving ./main.o.debug.temp.o]
+[Leaving ./libkallisti.a@0x47e1ea.debug.temp.o]
+[Leaving ./libkallisti.a@0x4969c2.debug.temp.o]
+[Leaving ./libkallisti.a@0x4a0bfe.debug.temp.o]
+[Leaving ./libkallisti.a@0x4d5006.debug.temp.o]
+[Leaving ./libkallisti.a@0x50cdf6.debug.temp.o]
+[Leaving ./libkallisti.a@0x51bd6a.debug.temp.o]
+[Leaving ./libkallisti.a@0x52e132.debug.temp.o]
+[Leaving ./libkallisti.a@0x54c40e.debug.temp.o]
+[Leaving ./libkallisti.a@0x555e42.debug.temp.o]
+[Leaving ./libkallisti.a@0x55f132.debug.temp.o]
+[Leaving ./libkallisti.a@0x56338e.debug.temp.o]
+[Leaving ./libkallisti.a@0x576682.debug.temp.o]
+[Leaving ./libkallisti.a@0x585a02.debug.temp.o]
+[Leaving ./libkallisti.a@0x592826.debug.temp.o]
+[Leaving ./libkallisti.a@0x6758d6.debug.temp.o]
+[Leaving ./libkallisti.a@0x6bb7b2.debug.temp.o]
+[Leaving ./libkallisti.a@0x6e9a82.debug.temp.o]
+[Leaving ./libkallisti.a@0x70d376.debug.temp.o]
+[Leaving ./libkallisti.a@0x71c4d6.debug.temp.o]
+[Leaving ./libkallisti.a@0x768f2a.debug.temp.o]
+[Leaving ./libkallisti.a@0x77cc9e.debug.temp.o]
+[Leaving ./libkallisti.a@0x790ffa.debug.temp.o]
+[Leaving ./libkallisti.a@0x79f102.debug.temp.o]
+[Leaving ./libkallisti.a@0x7a78ee.debug.temp.o]
+[Leaving ./libkallisti.a@0x7b2472.debug.temp.o]
+[Leaving ./libkallisti.a@0x800092.debug.temp.o]
+[Leaving ./libkallisti.a@0x834f7e.debug.temp.o]
+[Leaving ./libkallisti.a@0x8a112a.debug.temp.o]
+[Leaving ./libkallisti.a@0x8b513a.debug.temp.o]
+[Leaving ./libkallisti.a@0x8c45a2.debug.temp.o]
+[Leaving ./libkallisti.a@0x8d08da.debug.temp.o]
+[Leaving ./libkallisti.a@0x8e100e.debug.temp.o]
+[Leaving ./libkallisti.a@0x91ab66.debug.temp.o]
+[Leaving ./libkallisti.a@0x926b5e.debug.temp.o]
+[Leaving ./libkallisti.a@0x935516.debug.temp.o]
+[Leaving ./libkallisti.a@0x93da26.debug.temp.o]
+[Leaving ./libkallisti.a@0x96cb46.debug.temp.o]
+[Leaving ./libkallisti.a@0x99a76e.debug.temp.o]
+[Leaving ./libkallisti.a@0x9dd436.debug.temp.o]
+[Leaving ./libkallisti.a@0x9e28f2.debug.temp.o]
+[Leaving ./libkallisti.a@0xa3411a.debug.temp.o]
+[Leaving ./libkallisti.a@0xa73aee.debug.temp.o]
+[Leaving ./libkallisti.a@0xa7fd5e.debug.temp.o]
+[Leaving ./libkallisti.a@0xa90222.debug.temp.o]
+[Leaving ./libkallisti.a@0xaa2616.debug.temp.o]
+[Leaving ./libkallisti.a@0xaf55aa.debug.temp.o]
+[Leaving ./libkallisti.a@0xb076aa.debug.temp.o]
+[Leaving ./libkallisti.a@0xb10d22.debug.temp.o]
+[Leaving ./libkallisti.a@0xb2fd36.debug.temp.o]
+[Leaving ./libkallisti.a@0xb6d9f2.debug.temp.o]
+[Leaving ./libkallisti.a@0xba0072.debug.temp.o]
+[Leaving ./libkallisti.a@0xbb5a32.debug.temp.o]
+[Leaving ./libkallisti.a@0xbc4a26.debug.temp.o]
+[Leaving ./libkallisti.a@0xeeaeb6.debug.temp.o]
+[Leaving ./libkallisti.a@0xeffd96.debug.temp.o]
+[Leaving ./libkallisti.a@0xf06b4a.debug.temp.o]
+[Leaving ./libkallisti.a@0xf0c53e.debug.temp.o]
+[Leaving ./libkallisti.a@0xf1f2ca.debug.temp.o]
+[Leaving ./libkallisti.a@0xf6429a.debug.temp.o]
+[Leaving ./libkallisti.a@0xfb8a32.debug.temp.o]
+[Leaving ./libkallisti.a@0xfcc59e.debug.temp.o]
+[Leaving ./libkallisti.a@0x8962.debug.temp.o]
+[Leaving ./libkallisti.a@0x36316.debug.temp.o]
+[Leaving ./libkallisti.a@0x490fa.debug.temp.o]
+[Leaving ./libkallisti.a@0x4dfd2.debug.temp.o]
+[Leaving ./libkallisti.a@0x72ff6.debug.temp.o]
+[Leaving ./libkallisti.a@0xda7ee.debug.temp.o]
+[Leaving ./libkallisti.a@0x138efe.debug.temp.o]
+[Leaving ./libkallisti.a@0x1441fe.debug.temp.o]
+[Leaving ./libkallisti.a@0x1591b6.debug.temp.o]
+[Leaving ./libkallisti.a@0x16793a.debug.temp.o]
+[Leaving ./libkallisti.a@0x169906.debug.temp.o]
+[Leaving ./libkallisti.a@0x176bc6.debug.temp.o]
+[Leaving ./libkallisti.a@0x17a70e.debug.temp.o]
+[Leaving ./libkallisti.a@0x1979a6.debug.temp.o]
+[Leaving ./libkallisti.a@0x1a7a76.debug.temp.o]
+[Leaving ./libkallisti.a@0x1c2efe.debug.temp.o]
+[Leaving ./libkallisti.a@0x1dd28a.debug.temp.o]
+[Leaving ./libkallisti.a@0x1e329e.debug.temp.o]
+[Leaving ./libkallisti.a@0x20d1e2.debug.temp.o]
+[Leaving ./libkallisti.a@0x23b0b6.debug.temp.o]
+[Leaving ./libkallisti.a@0x25136e.debug.temp.o]
+[Leaving ./libkallisti.a@0x25ccce.debug.temp.o]
+[Leaving ./libkallisti.a@0x28fd3e.debug.temp.o]
+[Leaving ./libkallisti.a@0x29f42a.debug.temp.o]
+[Leaving ./libkallisti.a@0x2bd55e.debug.temp.o]
+[Leaving ./libkallisti.a@0x2e1fe2.debug.temp.o]
+[Leaving ./libkallisti.a@0x2f3c0a.debug.temp.o]
+[Leaving ./libkallisti.a@0x3132a6.debug.temp.o]
+[Leaving ./libkallisti.a@0x3311d6.debug.temp.o]
+[Leaving ./libkallisti.a@0x3396e2.debug.temp.o]
+[Leaving ./libkallisti.a@0x38acf2.debug.temp.o]
+[Leaving ./libkallisti.a@0x39a03e.debug.temp.o]
+[Leaving ./libkallisti.a@0x42c9fa.debug.temp.o]
+[Leaving ./libkallisti.a@0x4524d2.debug.temp.o]
+[Leaving ./libkallisti.a@0x45c646.debug.temp.o]
+[Leaving ./libkallisti.a@0x4b7e5a.debug.temp.o]
+[Leaving ./libkallisti.a@0x4ed8d2.debug.temp.o]
+[Leaving ./libkallisti.a@0x679f9a.debug.temp.o]
+[Leaving ./libkallisti.a@0x6fe4f6.debug.temp.o]
+[Leaving ./libkallisti.a@0x717ea6.debug.temp.o]
+[Leaving ./libkallisti.a@0x738a82.debug.temp.o]
+[Leaving ./libkallisti.a@0x746aae.debug.temp.o]
+[Leaving ./libkallisti.a@0x7637e6.debug.temp.o]
+[Leaving ./libkallisti.a@0x8ee7d2.debug.temp.o]
+[Leaving ./libkallisti.a@0x8fa106.debug.temp.o]
+[Leaving ./libkallisti.a@0x90a4fe.debug.temp.o]
+[Leaving ./libkallisti.a@0x915d92.debug.temp.o]
+[Leaving ./libkallisti.a@0xb1f996.debug.temp.o]
+[Leaving ./libkallisti.a@0xf4f9ae.debug.temp.o]
+[Leaving ./libkallisti.a@0xf8f812.debug.temp.o]
+[Leaving ./libkallisti.a@0xfc0942.debug.temp.o]
+[Leaving ./libkallisti.a@0xabe2.debug.temp.o]
+[Leaving ./libkallisti.a@0x80d7a.debug.temp.o]
+[Leaving ./libkallisti.a@0xaec76.debug.temp.o]
+[Leaving ./libkallisti.a@0x1d712a.debug.temp.o]
+[Leaving ./libkallisti.a@0x1eb716.debug.temp.o]
+[Leaving ./libkallisti.a@0x35c3e2.debug.temp.o]
+[Leaving ./libkallisti.a@0x46d956.debug.temp.o]
+[Leaving ./libkallisti.a@0x5a0ae6.debug.temp.o]
+[Leaving ./libkallisti.a@0x5c7eae.debug.temp.o]
+[Leaving ./libkallisti.a@0x5fabd2.debug.temp.o]
+[Leaving ./libkallisti.a@0x60a662.debug.temp.o]
+[Leaving ./libkallisti.a@0x62495e.debug.temp.o]
+[Leaving ./libkallisti.a@0x640a1a.debug.temp.o]
+[Leaving ./libkallisti.a@0x981b32.debug.temp.o]
+[Leaving ./libkallisti.a@0x9846b2.debug.temp.o]
+[Leaving ./libkallisti.a@0x9b4dc2.debug.temp.o]
+[Leaving ./libkallisti.a@0x9fb066.debug.temp.o]
+[Leaving ./libkallisti.a@0xa27fbe.debug.temp.o]
+[Leaving ./libkallisti.a@0xa44166.debug.temp.o]
+[Leaving ./libkallisti.a@0xa4c62a.debug.temp.o]
+[Leaving ./libkallisti.a@0xaadf46.debug.temp.o]
+[Leaving ./libkallisti.a@0xacc2ea.debug.temp.o]
+[Leaving ./libkallisti.a@0x52295a.debug.temp.o]
+[Leaving ./libkallisti.a@0x829e5a.debug.temp.o]
+[Leaving ./libkallisti.a@0x837f8a.debug.temp.o]
+[Leaving ./libkallisti.a@0x8416f2.debug.temp.o]
+[Leaving ./libkallisti.a@0x848186.debug.temp.o]
+[Leaving ./libkallisti.a@0x84de26.debug.temp.o]
+[Leaving ./libkallisti.a@0x852532.debug.temp.o]
+[Leaving ./libkallisti.a@0x858fa2.debug.temp.o]
+[Leaving ./libkallisti.a@0x861892.debug.temp.o]
+[Leaving ./libkallisti.a@0x86b04a.debug.temp.o]
+[Leaving ./libkallisti.a@0x86fee2.debug.temp.o]
+[Leaving ./libkallisti.a@0x87649a.debug.temp.o]
+[Leaving ./libkallisti.a@0x87b24e.debug.temp.o]
+[Leaving ./libkallisti.a@0x88010a.debug.temp.o]
+[Leaving ./libkallisti.a@0x89c242.debug.temp.o]
+COLLECT_GCC_OPTIONS='-v' '-O3' '-flto=auto' '-ffat-lto-objects' '-freorder-blocks-algorithm=simple' '-fipa-pta' '-fno-PIE' '-fomit-frame-pointer' '-fbuiltin' '-ffast-math' '-ffp-contract=fast' '-m4-single' '-ml' '-mfsrra' '-mfsca' '-ffunction-sections' '-fdata-sections' '-matomic-model=soft-gusa' '-ftls-model=local-exec' '-Wall' '-g' '-T' './shlelf.xc' '-nostdlib' '-L.' '-save-temps' '-flto-partition=one' '-fdump-rtl-final' '-o' './prog.elf' '-dumpdir' './prog.elf.'

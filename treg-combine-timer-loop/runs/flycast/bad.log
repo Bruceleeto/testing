@@ -1,0 +1,34 @@
+00:00:000 sdl/sdl.cpp:938 N[RENDERER]: Monitor refresh rate: 0 Hz (1280 x 720)
+00:00:282 ui/gui.cpp:246 N[RENDERER]: Screen DPI is 96, size 1393 x 802. Scaling by 1.00
+00:00:429 rend/gles/gles.cpp:732 N[RENDERER]: OpenGL version 4.5
+00:00:429 rend/gles/gles.cpp:733 N[RENDERER]: Vendor 'Mesa' Renderer 'llvmpipe (LLVM 21.1.8, 256 bits)' Version '4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3'
+00:00:447 rend/gles/gles.cpp:744 N[RENDERER]: glBlitFramebuffer test successful
+00:00:540 hw/mem/addrspace.cpp:425 N[VMEM]: Info: nvmem is enabled
+00:00:569 hw/mem/addrspace.cpp:457 N[VMEM]: BASE 0x762201f40000 RAM(32 MB) 0x76220df40000 VRAM64(8 MB) 0x762205f40000 ARAM(2 MB) 0x762221f40000
+00:00:582 hw/mem/addrspace.cpp:425 N[VMEM]: Info: nvmem is enabled
+00:00:603 hw/mem/addrspace.cpp:457 N[VMEM]: BASE 0x762201f40000 RAM(32 MB) 0x76220df40000 VRAM64(8 MB) 0x762205f40000 ARAM(2 MB) 0x762221f40000
+00:00:641 reios/reios.cpp:641 N[REIOS]: -----------------
+00:00:641 reios/reios.cpp:642 N[REIOS]: REIOS: Booting up
+00:00:641 reios/reios.cpp:643 N[REIOS]: -----------------
+
+--
+KallistiOS v2.3.0 [dreamcast/pristine]
+  Git revision: 6e0b2240-dirty
+  Thu Nov  5 11:54:51 AM GMT 2026
+  bruce@bruce-HP-Z240-Tower-Workstation:/opt/toolchains/dc/kos
+  sh-elf-gcc (GCC) 17.0.0 20261026 (experimental) [https://github.com/olegendo/gcc-testing]
+maple: active drivers:
+    Dreameye (Camera): Camera
+    Sound Input Peripheral: Microphone
+    PuruPuru (Vibration) Pack: JumpPack
+    VMU Driver: Clock, LCD, MemoryCard
+    Mouse Driver: Mouse
+    Keyboard Driver: Keyboard
+    Controller Driver: Controller
+    Lightgun: LightGun
+vid_set_mode: 640x480 VGA with 1 framebuffers.
+maple: attached devices:
+  A0: Dreamcast Controller           (01000000: Controller)
+  A1: Visual Memory                  (0e000000: Clock, LCD, MemoryCard)
+
+120 frames: 0 cycles = 0 ms (PASS)
